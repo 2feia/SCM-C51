@@ -60,24 +60,24 @@ void IR_CODE(void) interrupt 0   //在外部中断子程序中解码
 	//否则检测成功率只有50%左右
 	if(IRIN==1)         //检测是否是干扰
     {                   //确认IR信号出现
-			EX0 =1;     //是干扰就重新开启INT0中断
-			return;
+		EX0 =1;     //是干扰就重新开启INT0中断
+		return;
     }                     
     //while(!IRIN) ;    //等IRIN变为高电平，开始解码
     for (j=0;j<4;j++)   //收集4组数据
     {
-            for (k=0;k<8;k++)  //每组数据有8位
-            {
-					while(!IRIN) delay_50us(1);  //等待高电平
-					delay_50us(16); //延时0.8ms,减少误差尽量跳到边缘即可
-					if(IRIN==1)
-					{
-						ir_rec[n]=1;
-						delay_50us(20);          //延时1ms
-					}
-					else ir_rec[n]=0;
-                    n++;
-            }
+		for (k=0;k<8;k++)  //每组数据有8位
+		{
+			while(!IRIN) delay_50us(1);  //等待高电平
+			delay_50us(16); //延时0.8ms,减少误差尽量跳到边缘即可
+			if(IRIN==1)
+			{
+				ir_rec[n]=1;
+				delay_50us(20);          //延时1ms
+			}
+			else ir_rec[n]=0;
+			n++;
+		}
     }
     EX0=1;
 }
